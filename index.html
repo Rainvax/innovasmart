@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compara los modelos de AirPods - Apple (CO)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #1d1d1f;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Estilos del Chip H2 */
+        .chip-box {
+            width: 44px;
+            height: 44px;
+            border: 2.5px solid #1d1d1f;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+        }
+
+        .chip-box span {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d1d1f;
+            letter-spacing: -0.5px;
+        }
+
+        /* Estilos del Icono ANC (Proporcionado) */
+        .anc-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .anc-head {
+            width: 16px;
+            height: 16px;
+            background-color: #1d1d1f;
+            border-radius: 50%;
+            position: absolute;
+            top: 11px;
+            z-index: 2;
+        }
+
+        .anc-body {
+            width: 36px;
+            height: 16px;
+            background-color: #1d1d1f;
+            border-radius: 18px 18px 12px 12px;
+            position: absolute;
+            bottom: 6px;
+        }
+
+        .anc-ring {
+            width: 32px;
+            height: 32px;
+            border: 2.8px solid #1d1d1f;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            box-sizing: border-box;
+            clip-path: inset(0 0 38% 0); 
+        }
+
+        /* Variante Pro (Doble arco) */
+        .anc-ring-outer {
+            width: 44px;
+            height: 44px;
+            border: 2.8px solid #1d1d1f;
+            border-radius: 50%;
+            position: absolute;
+            top: -5px;
+            box-sizing: border-box;
+            clip-path: inset(0 0 45% 0);
+        }
+
+        /* Navegación pegajosa */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 999;
+            border-bottom: 1px solid #d2d2d7;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 40px;
+        }
+
+        .sticky-header.scrolled {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .sticky-header.scrolled .product-visuals {
+            height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+            transform: translateY(-20px) scale(0.8);
+            pointer-events: none;
+        }
+
+        .product-visuals {
+            transition: all 0.4s ease;
+        }
+
+        .image-placeholder {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .box {
+            width: 140px;
+            height: 140px;
+            background: #f5f5f7;
+            border: 1px dashed #d2d2d7;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #86868b;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1060px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .section-header {
+            max-width: 1060px;
+            margin: 80px auto 30px;
+            font-size: 32px;
+            font-weight: 600;
+            border-bottom: 1px solid #d2d2d7;
+            padding-bottom: 15px;
+        }
+
+        .feature-cell {
+            text-align: center;
+            padding: 40px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .feature-icon {
+            height: 60px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-placeholder {
+            width: 50px;
+            height: 50px;
+            border: 1px dashed #d2d2d7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: #86868b;
+        }
+
+        .text-main {
+            font-size: 14px;
+            line-height: 1.45;
+            font-weight: 400;
+            max-width: 250px;
+            margin-bottom: 4px;
+        }
+
+        .dash {
+            font-size: 24px;
+            color: #d2d2d7;
+            font-weight: 300;
+            margin: 40px 0;
+        }
+
+        .btn-buy {
+            background: #0071e3;
+            color: white;
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 980px;
+            margin: 12px 0 6px;
+        }
+
+        .link-blue {
+            color: #0066cc;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .link-blue:hover { text-decoration: underline; }
+
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #d2d2d7;
+            background-color: white;
+            margin: 0 auto 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="pt-20 pb-12 text-center">
+    <h1 class="text-5xl font-semibold tracking-tight">Compara los modelos de AirPods</h1>
+</div>
+
+<!-- CABECERA PEGAJOSA -->
+<nav id="navbar" class="sticky-header">
+    <div class="comparison-grid border-b border-gray-100 pb-6">
+        <div class="text-center">
+            <select class="bg-transparent font-medium text-lg mb-4 outline-none cursor-pointer"><option>AirPods Pro 2</option></select>
+            <div class="product-visuals">
+                <div class="image-placeholder"><div class="box">[Imagen de AirPods Pro 2]</div></div>
+                <div class="color-dot"></div>
+                <p class="text-[11px] text-gray-500 mb-4">Blanco</p>
+                <button class="btn-buy">Comprar</button><br>
+                <a href="#" class="link-blue">Más información ></a>
+            </div>
+        </div>
+        <div class="text-center">
+            <select class="bg-transparent font-medium text-lg mb-4 outline-none cursor-pointer"><option>AirPods 4</option></select>
+            <div class="product-visuals">
+                <div class="image-placeholder"><div class="box">[Imagen de AirPods 4]</div></div>
+                <div class="color-dot"></div>
+                <p class="text-[11px] text-gray-500 mb-4">Blanco</p>
+                <button class="btn-buy">Comprar</button><br>
+                <a href="#" class="link-blue">Más información ></a>
+            </div>
+        </div>
+        <div class="text-center">
+            <select class="bg-transparent font-medium text-lg mb-4 outline-none cursor-pointer"><option>AirPods Pro 3</option></select>
+            <div class="product-visuals">
+                <div class="image-placeholder"><div class="box">[Imagen de AirPods Pro 3]</div></div>
+                <div class="color-dot"></div>
+                <p class="text-[11px] text-gray-500 mb-4">Blanco</p>
+                <button class="btn-buy">Comprar</button><br>
+                <a href="#" class="link-blue">Más información ></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- SECCIONES DE COMPARACIÓN -->
+<div class="max-w-[1060px] mx-auto pb-40">
+    <div class="section-header">Resumen</div>
+
+    <!-- PUNTO 1: CHIP -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="chip-box"><span>H2</span></div>
+            <p class="font-semibold text-sm">Chip H2</p>
+        </div>
+        <div class="feature-cell">
+            <div class="chip-box"><span>H2</span></div>
+            <p class="font-semibold text-sm">Chip H2</p>
+        </div>
+        <div class="feature-cell">
+            <div class="chip-box"><span>H2</span></div>
+            <p class="font-semibold text-sm">Chip H2</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 2: CANCELACIÓN DE RUIDO (CON ICONOS SOLICITADOS) -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="anc-icon">
+                <div class="anc-ring"></div>
+                <div class="anc-head"></div>
+                <div class="anc-body"></div>
+            </div>
+            <p class="text-main">Hasta 2 veces más Cancelación Activa de Ruido en comparación con los AirPods Pro originales y los AirPods 4 con Cancelación Activa de Ruido²</p>
+        </div>
+        <div class="feature-cell"><div class="dash">—</div></div>
+        <div class="feature-cell">
+            <div class="anc-icon">
+                <div class="anc-ring-outer"></div>
+                <div class="anc-ring"></div>
+                <div class="anc-head"></div>
+                <div class="anc-body"></div>
+            </div>
+            <p class="text-main">Hasta 4 veces más Cancelación Activa de Ruido que los AirPods Pro originales¹</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 3: AUDIO ADAPTATIVO -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Audio Adaptativo]</div></div>
+            <p class="text-main">Audio Adaptativo³ y modo Ambiente⁴</p>
+        </div>
+        <div class="feature-cell"><div class="dash">—</div></div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Audio Adaptativo]</div></div>
+            <p class="text-main">Audio Adaptativo³ y modo Ambiente⁴</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 4: RECONOCIMIENTO DE CONVERSACIÓN -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Conversación]</div></div>
+            <p class="text-main">Reconocimiento de Conversación³</p>
+        </div>
+        <div class="feature-cell"><div class="dash">—</div></div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Conversación]</div></div>
+            <p class="text-main">Reconocimiento de Conversación³</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 5: AUDIO ESPACIAL -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Audio Espacial]</div></div>
+            <p class="text-main">Audio Espacial personalizado con seguimiento dinámico de la cabeza⁵</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Audio Espacial]</div></div>
+            <p class="text-main">Audio Espacial personalizado con seguimiento dinámico de la cabeza⁵</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Audio Espacial]</div></div>
+            <p class="text-main">Audio Espacial personalizado con seguimiento dinámico de la cabeza⁵</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 6: FRECUENCIA CARDÍACA -->
+    <div class="comparison-grid">
+        <div class="feature-cell"><div class="dash">—</div></div>
+        <div class="feature-cell"><div class="dash">—</div></div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Corazón]</div></div>
+            <p class="text-main">Detección de la frecuencia cardíaca al entrenar⁷</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 7: SALUD AUDITIVA -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Salud]</div></div>
+            <p class="text-main">Prueba de Audición⁸, Asistencia Auditiva⁸ y Protección Auditiva⁹</p>
+        </div>
+        <div class="feature-cell"><div class="dash">—</div></div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Salud]</div></div>
+            <p class="text-main">Prueba de Audición⁸, Asistencia Auditiva⁸ y Protección Auditiva⁹</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 8: TRADUCCIÓN EN VIVO -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Traducción]</div></div>
+            <p class="text-main">Traducción en Vivo¹⁰</p>
+        </div>
+        <div class="feature-cell"><div class="dash">—</div></div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Traducción]</div></div>
+            <p class="text-main">Traducción en Vivo¹⁰</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 9: CONTROLES -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Control táctil]</div></div>
+            <p class="text-main font-semibold">Control táctil</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Sensor fuerza]</div></div>
+            <p class="text-main font-semibold">Sensor de fuerza</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Control táctil]</div></div>
+            <p class="text-main font-semibold">Control táctil</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 10: BATERÍA HORAS -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <p class="text-[48px] font-semibold mb-2">6 h</p>
+            <p class="text-main">Hasta 6 horas de audio con una sola carga con Cancelación Activa de Ruido¹¹</p>
+        </div>
+        <div class="feature-cell">
+            <p class="text-[48px] font-semibold mb-2">5 h</p>
+            <p class="text-main">Hasta 5 horas de audio con una sola carga¹¹</p>
+        </div>
+        <div class="feature-cell">
+            <p class="text-[48px] font-semibold mb-2">8 h</p>
+            <p class="text-main">Hasta 8 horas de audio con una sola carga con Cancelación Activa de Ruido¹¹</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 11: ESTUCHE DE CARGA -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Estuche MagSafe]</div></div>
+            <p class="text-main">Estuche de carga MagSafe (USB-C)¹³ Incluye enganche para correa y parlante Encontrar¹⁴</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Estuche USB-C]</div></div>
+            <p class="text-main">Estuche de carga (USB-C)¹²</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Estuche MagSafe]</div></div>
+            <p class="text-main">Estuche de carga MagSafe (USB-C)¹³ Incluye enganche para correa y parlante Encontrar¹⁴</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 12: RESISTENCIA -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Resistencia]</div></div>
+            <p class="text-main">Resistentes al polvo, al agua y al sudor (IP54)¹⁵</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Resistencia]</div></div>
+            <p class="text-main">Resistentes al polvo, al agua y al sudor (IP54)¹⁵</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Resistencia]</div></div>
+            <p class="text-main">Resistentes al polvo, al agua y al sudor (IP57)¹⁶</p>
+        </div>
+    </div>
+
+    <!-- PUNTO 13: CAMBIO AUTOMÁTICO -->
+    <div class="comparison-grid">
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Cambio Auto]</div></div>
+            <p class="text-main">Cambio Automático¹⁸</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Cambio Auto]</div></div>
+            <p class="text-main">Cambio Automático¹⁸</p>
+        </div>
+        <div class="feature-cell">
+            <div class="feature-icon"><div class="icon-placeholder">[Cambio Auto]</div></div>
+            <p class="text-main">Cambio Automático¹⁸</p>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER LEGAL -->
+<footer class="bg-[#f5f5f7] py-20 px-10 border-t border-gray-200">
+    <div class="max-w-[1060px] mx-auto text-[11px] text-gray-500 leading-relaxed space-y-6">
+        <p>1. Hasta 4 veces más Cancelación Activa de Ruido en comparación con los AirPods Pro originales y los AirPods 4 con Cancelación Activa de Ruido. La prueba se realizó según la norma IEC 60268-24.</p>
+        <p>2. Hasta 2 veces más Cancelación Activa de Ruido en comparación con los AirPods Pro originales y los AirPods 4 con Cancelación Activa de Ruido.</p>
+        <p>3. Disponible en dispositivos compatibles que tengan iOS 18, iPadOS 18 o macOS Sequoia y posterior instalado al enlazarlos con unos AirPods 4 con Cancelación Activa de Ruido o AirPods Pro 2 y posteriores con el último firmware.</p>
+        <p>4. El rendimiento del dispositivo y las funcionalidades de control de ruido como Cancelación Activa de Ruido, Audio Adaptativo y modo Ambiente pueden verse afectados por la acumulación de cera o suciedad. Limpia el dispositivo periódicamente. Consulta las instrucciones de limpieza en support.apple.com/102672.</p>
+        <p>5. Requiere hardware y software compatibles. Funciona con contenido y apps compatibles. Se requiere un iPhone con cámara TrueDepth para crear un perfil personal para el Audio Espacial.</p>
+        <p>6. La reproducción de audio Lossless requiere una conexión mediante cable USB‑C, así como contenido compatible.</p>
+        <p>7. El monitoreo de la frecuencia cardiaca integrado está diseñado para funcionar durante los entrenamientos con la app Fitness y es compatible con apps de terceros en dispositivos iPhone con iOS 26 o posterior. Consulta support.apple.com/123184.</p>
+        <p>8. Las funcionalidades Prueba de Audición y Asistencia Auditiva están disponibles en los AirPods Pro 2 y posteriores con el último firmware enlazados con dispositivos compatibles con iOS 18 o iPadOS 18 posterior.</p>
+        <p>9. La funcionalidad Protección Auditiva está disponible en los AirPods Pro 2 y posteriores con el último firmware enlazados con un iPhone, iPad o Mac compatible que tenga iOS 18, iPadOS 18 o macOS Sequoia o posterior instalado.</p>
+        <p>10. Traducción en Vivo con AirPods funciona en los AirPods 4 con Cancelación Activa de Ruido y los AirPods Pro 2 y modelos posteriores que tengan el último firmware al enlazarlos con un iPhone con iOS 26 o versión posterior instalada.</p>
+        <p>11. La duración de la batería depende de la configuración del dispositivo, el entorno, el uso y muchos otros factores.</p>
+        <p>12. La carga requiere un cargador USB‑C compatible.</p>
+        <p>13. La carga inalámbrica requiere un cargador inalámbrico con certificación Qi. La carga con MagSafe requiere un cargador MagSafe compatible. El estuche funciona con el cargador del Apple Watch.</p>
+        <p>14. La funcionalidad Encontrar requiere iOS 26 o versión posterior.</p>
+        <p>15. Los AirPods 4 son resistentes al polvo, al agua y al sudor (IP54). La resistencia no es una condición permanente y podría disminuir como consecuencia del uso normal.</p>
+        <p>16. Los AirPods Pro 3 tienen una clasificación IP57 y los AirPods Pro 2 tienen una clasificación IP54 según la norma IEC 60529.</p>
+        <p>17. Los AirPods (3.ª generación) son resistentes al agua y al sudor con clasificación IPX4.</p>
+        <p>18. Requiere una Cuenta de Apple y un dispositivo Apple compatible con la última versión del software del sistema operativo.</p>
+    </div>
+</footer>
+
+<script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 150) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+</script>
+
+</body>
+</html>
